@@ -1,0 +1,29 @@
+App\Entity\ComidaPreferidad:
+  #buffy_{1..20}:
+  ComidaPreferida{1..10}:
+    nombre: <gustavoPComidas()>
+  ComidaPreferida:
+    nombre: <gustavoPComidas()>
+
+
+
+
+App\Entity\Buffy:
+  #buffy_{1..20}:
+  buffy_{1..10}:
+    #name: <name()>
+    #name: <gustavoName()>
+    #name: <gustavoNmujereslatinas()>
+    name: <gustavoNombreslatinos()>
+    quote: <buffyQuote()>
+    pepe: '@ComidaPreferida*'
+    #quote: <text()>
+
+
+
+
+
+
+
+
+
