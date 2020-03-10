@@ -27,6 +27,10 @@
         </tbody>
     </table>
 
+    <button type="submit" class="btn btn-primary">Delete</button>
+
+ 
+
     <a href="{{ path('intendente_index') }}">back to list</a>
 
     <a href="{{ path('intendente_edit', {'id': intendente.id}) }}">edit</a>
@@ -38,7 +42,7 @@
     {% block javascripts %}
        
 
-     {#  <script src="{{ asset('js/pepe.js') }}"></script> -- #>  #}
+ <script src="{{ asset('js/pepe.js') }}"></script>
 
 
     {% endblock %}

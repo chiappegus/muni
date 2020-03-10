@@ -24,7 +24,7 @@ class IntendenteController extends AbstractController
             'intendentes' => $intendenteRepository->findAll(),
         ]);
     }
-
+   
     /**
      * @Route("/new", name="intendente_new", methods={"GET","POST"})
      */
@@ -35,11 +35,18 @@ class IntendenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+           // dd($form->getdata());
+           $persona =$intendente->getRelation();
+           //dd(   $persona-> getId() );
+           //
+           
+          return $this->redirectToRoute('persona_new' , ['persona' =>$persona->getId()] );
+           /*mio*/
+      /*    $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($intendente);
             $entityManager->flush();
-
-            return $this->redirectToRoute('intendente_index');
+*/
+           // return $this->redirectToRoute('intendente_index');
         }
 
         return $this->render('intendente/new.html.twig', [
@@ -67,7 +74,7 @@ class IntendenteController extends AbstractController
     {
         $form = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);
-
+        //dd($intendente-> getId() );
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 

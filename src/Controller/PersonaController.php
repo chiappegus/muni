@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Persona;
+use App\Entity\Intendente;
 use App\Form\PersonaType;
 use App\Repository\PersonaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/persona")
@@ -27,10 +30,41 @@ class PersonaController extends AbstractController
 
     /**
      * @Route("/new", name="persona_new", methods={"GET","POST"})
+     
      */
-    public function new(Request $request): Response
-    {
-        $persona = new Persona();
+    public function new(Request $request ,PersonaRepository $personaRepository): Response
+    {     
+//dd($em); 
+//           
+//          
+//         
+//          
+           if(!isset($_GET["persona"])) {
+              $persona = new Persona();
+           }
+           else
+            {
+            $user = $_GET["persona"];
+            $persona= $personaRepository->find($user);
+
+
+            }
+       
+            //dd($user);
+
+           //  dd( $personaRepository->find($user));
+
+        //dd($this->getDoctrine()->getManager());
+        //dd($intendente);
+     /*    
+        if ( is_null($persona)) {
+          
+        }*/
+
+        //$persona = new Persona();
+      
+
+        //$persona= $pepe;
         $form = $this->createForm(PersonaType::class, $persona);
         $form->handleRequest($request);
 
@@ -51,7 +85,7 @@ class PersonaController extends AbstractController
     /**
      * @Route("/{id}", name="persona_show", methods={"GET"})
      */
-    public function show(Persona $persona): Response
+    public function show(Persona $persona ): Response
     {
         return $this->render('persona/show.html.twig', [
             'persona' => $persona,
