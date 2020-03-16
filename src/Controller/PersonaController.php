@@ -40,6 +40,7 @@ class PersonaController extends AbstractController
 //         
 //          
            if(!isset($_GET["persona"])) {
+           
               $persona = new Persona();
            }
            else
