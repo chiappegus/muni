@@ -35,6 +35,18 @@ class IntendenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+             /*==============================================================================================================================================
+        =            aca seguro tengo que hacer una funcion 
+                        para detectar si el intendente ya tiene cargado el DNI            =
+        ==============================================================================================================================================*/
+        
+        
+        
+        /*=====  End of aca seguro tengo que hacer una funcion   ======*/
+
+
+
            // dd($form->getdata());
            $persona =$intendente->getRelation();
            //dd(   $persona-> getId() );
@@ -61,10 +73,20 @@ class IntendenteController extends AbstractController
      */
     public function show(Intendente $intendente): Response
     {
+
+
+        $persona=$intendente->getRelation();
+       /* dump($persona->getDni());
+        dump($persona->getNombre());
+        dump($persona->getApellido());*/
+        
+       
+        //die();
         return $this->render('intendente/show.html.twig', [
             'intendente' => $intendente,
+            'persona'=>$persona
         ]);
-         die();
+         //die();
     }
 
     /**
@@ -72,6 +94,9 @@ class IntendenteController extends AbstractController
      */
     public function edit(Request $request, Intendente $intendente): Response
     {
+
+      
+        
         $form = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);
         //dd($intendente-> getId() );
