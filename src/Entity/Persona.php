@@ -36,65 +36,60 @@ class Persona
      */
     private $intendente;
 
-    public function getId(): ?int
+    public function getId():  ? int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getNombre() :  ? string
     {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): self
+    public function setNombre(string $nombre) : self
     {
         $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getApellido(): ?string
+    public function getApellido():  ? string
     {
         return $this->apellido;
     }
 
-    public function setApellido(string $apellido): self
+    public function setApellido(string $apellido) : self
     {
         $this->apellido = $apellido;
 
         return $this;
     }
 
- 
-
     public function __toString()
     {
-       
-        
-        return  $this->apellido ." ". $this->nombre;
 
-        
+        return $this->apellido . " " . $this->nombre;
+
     }
 
-
-    public function getDni(): ?int
+    public function getDni():  ? int
     {
         return $this->dni;
     }
 
-    public function setDni(int $dni): self
+    public function setDni(int $dni) : self
     {
         $this->dni = $dni;
 
         return $this;
     }
 
-    public function getIntendente(): ?Intendente
+    public function getIntendente():  ? Intendente
     {
         return $this->intendente;
     }
 
-    public function setIntendente(Intendente $intendente): self
+    public function setIntendente(Intendente $intendente) : self
     {
         $this->intendente = $intendente;
 
