@@ -25,26 +25,83 @@ class PersonaRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    return $this->createQueryBuilder('p')
+    ->andWhere('p.exampleField = :val')
+    ->setParameter('val', $value)
+    ->orderBy('p.id', 'ASC')
+    ->setMaxResults(10)
+    ->getQuery()
+    ->getResult()
+    ;
     }
-    */
+     */
 
     /*
     public function findOneBySomeField($value): ?Persona
     {
+    return $this->createQueryBuilder('p')
+    ->andWhere('p.exampleField = :val')
+    ->setParameter('val', $value)
+    ->getQuery()
+    ->getOneOrNullResult()
+    ;
+    }
+     */
+
+    /**
+     * @param null|string $value
+     * @return Persona[] Returns an array of Persona objects
+     */
+
+    public function findByDniINNER( ? string $value)
+    {
+        /*=================================
+        =            con inner            =
+        =================================*/
+
+        /*el tema aca es que trae toda la info
+        con el inner y si no es intendente o no esta cargado no trae nada
+
+        /*=====  End of con inner  ======*/
+
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->innerJoin('p.intendente', 'a')
+        //->addSelect('a')
+            ->andWhere('p.dni like :val OR p.nombre like :val OR a.estado like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('p.id', 'ASC')
+        //->setMaxResults(10)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    /**
+     * @param null|string $value
+     * @return Persona[] Returns an array of Persona objects
+     */
+
+    public function findByDNI( ? string $value)
+    {
+        /*=================================
+        =            con con left se soliciona            =
+        =================================*/
+
+        /*el tema aca es que trae toda la info
+        con el left  y si no es intendente o no esta cargado  trae todo
+
+        /*=====  End of con con left se soliciona    ======*/
+
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.intendente', 'a')
+            ->addSelect('a') # es increible como baja el tiempo
+            ->andWhere('p.dni like :val OR p.nombre like :val OR a.estado like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('p.id', 'ASC')
+        //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

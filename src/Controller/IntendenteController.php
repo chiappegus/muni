@@ -24,46 +24,82 @@ class IntendenteController extends AbstractController
             'intendentes' => $intendenteRepository->findAll(),
         ]);
     }
-   
+
     /**
      * @Route("/new", name="intendente_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
+    function new (Request $request): Response{
         $intendente = new Intendente();
-        $form = $this->createForm(IntendenteType::class, $intendente);
+        $form       = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-             /*==============================================================================================================================================
-        =            aca seguro tengo que hacer una funcion 
-                        para detectar si el intendente ya tiene cargado el DNI            =
-        ==============================================================================================================================================*/
-        
-        
-        
-        /*=====  End of aca seguro tengo que hacer una funcion   ======*/
+            /*==============================================================================================================================================
+            =            aca seguro tengo que hacer una funcion
+            para detectar si el intendente ya tiene cargado el DNI            =
+            ==============================================================================================================================================*/
 
+            /*=====  End of aca seguro tengo que hacer una funcion   ======*/
 
+            // dd($form->getdata());
+            $persona = $intendente->getRelation();
+            //dd(   $persona-> getId() );
+            //
 
-           // dd($form->getdata());
-           $persona =$intendente->getRelation();
-           //dd(   $persona-> getId() );
-           //
-           
-          return $this->redirectToRoute('persona_new' , ['persona' =>$persona->getId()] );
-           /*mio*/
-      /*    $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($intendente);
             $entityManager->flush();
-*/
-           // return $this->redirectToRoute('intendente_index');
+
+            return $this->redirectToRoute('persona_new', ['persona' => $persona->getId()]);
+            /*mio*/
+            /*
+             */
+            // return $this->redirectToRoute('intendente_index');
         }
 
         return $this->render('intendente/new.html.twig', [
             'intendente' => $intendente,
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
+        ]);
+        die();
+    }
+
+    /**
+     * @Route("/news", name="intendente_news", methods={"GET","POST"})
+     */
+    public function news(Request $request): Response
+    {
+        $intendente = new Intendente();
+        $form       = $this->createForm(IntendenteType::class, $intendente);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /*==============================================================================================================================================
+            =            aca seguro tengo que hacer una funcion
+            para detectar si el intendente ya tiene cargado el DNI            =
+            ==============================================================================================================================================*/
+
+            /*=====  End of aca seguro tengo que hacer una funcion   ======*/
+
+            // dd($form->getdata());
+            $persona = $intendente->getRelation();
+            //dd(   $persona-> getId() );
+            //
+
+            return $this->redirectToRoute('persona_new', ['persona' => $persona->getId()]);
+            /*mio*/
+            /*    $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($intendente);
+            $entityManager->flush();
+             */
+            // return $this->redirectToRoute('intendente_index');
+        }
+
+        return $this->render('intendente/news.html.twig', [
+            'intendente' => $intendente,
+            'form'       => $form->createView(),
         ]);
         die();
     }
@@ -74,19 +110,17 @@ class IntendenteController extends AbstractController
     public function show(Intendente $intendente): Response
     {
 
-
-        $persona=$intendente->getRelation();
-       /* dump($persona->getDni());
+        $persona = $intendente->getRelation();
+        /* dump($persona->getDni());
         dump($persona->getNombre());
         dump($persona->getApellido());*/
-        
-       
+
         //die();
         return $this->render('intendente/show.html.twig', [
             'intendente' => $intendente,
-            'persona'=>$persona
+            'persona'    => $persona,
         ]);
-         //die();
+        //die();
     }
 
     /**
@@ -95,8 +129,6 @@ class IntendenteController extends AbstractController
     public function edit(Request $request, Intendente $intendente): Response
     {
 
-      
-        
         $form = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);
         //dd($intendente-> getId() );
@@ -108,9 +140,9 @@ class IntendenteController extends AbstractController
 
         return $this->render('intendente/edit.html.twig', [
             'intendente' => $intendente,
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
         ]);
-         die();
+        die();
     }
 
     /**
@@ -118,13 +150,13 @@ class IntendenteController extends AbstractController
      */
     public function delete(Request $request, Intendente $intendente): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$intendente->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $intendente->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($intendente);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('intendente_index');
-         die();
+        die();
     }
 }
