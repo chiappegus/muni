@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonaRepository")
@@ -35,6 +36,35 @@ class Persona
      * @ORM\OneToOne(targetEntity="App\Entity\Intendente", mappedBy="relation", cascade={"persist", "remove"})
      */
     private $intendente;
+    /*==============================================
+    =            recientemente agregado            =
+    ==============================================*/
+    /**
+     *@ORM\Column(type="integer" ,  unique=true)
+     * @Gedmo\Slug(fields={"dni"})
+     */
+    private $slug;
+
+    /**
+     * Get slug
+     * @return
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    /*=====  End of recientemente agregado  ======*/
 
     public function getId():  ? int
     {

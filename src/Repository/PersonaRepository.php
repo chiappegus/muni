@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Persona;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Persona|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,6 +54,34 @@ class PersonaRepository extends ServiceEntityRepository
      * @return Persona[] Returns an array of Persona objects
      */
 
+    public function findByDni( ? string $value)
+    {
+        /*=================================
+        =            con inner            =
+        =================================*/
+
+        /*el tema aca es que trae toda la info
+        con el inner y si no es intendente o no esta cargado no trae nada
+
+        /*=====  End of con inner  ======*/
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.intendente', 'a')
+        //->addSelect('a')
+            ->andWhere('p.dni like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('p.id', 'ASC')
+        //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param null|string $value
+     * @return Persona[] Returns an array of Persona objects
+     */
+
     public function findByDniINNER( ? string $value)
     {
         /*=================================
@@ -78,10 +107,9 @@ class PersonaRepository extends ServiceEntityRepository
 
     /**
      * @param null|string $value
-     * @return Persona[] Returns an array of Persona objects
      */
 
-    public function findByDNI( ? string $value)
+    public function getwithQueryBuilder( ? string $value) : QueryBuilder
     {
         /*=================================
         =            con con left se soliciona            =
@@ -92,16 +120,23 @@ class PersonaRepository extends ServiceEntityRepository
 
         /*=====  End of con con left se soliciona    ======*/
 
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.intendente', 'a')
-            ->addSelect('a') # es increible como baja el tiempo
-            ->andWhere('p.dni like :val OR p.nombre like :val OR a.estado like :val')
-            ->setParameter('val', '%' . $value . '%')
-            ->orderBy('p.id', 'ASC')
+            ->addSelect('a');
+        if ($value) {
+            $qb->andWhere('p.dni like :val OR p.nombre like :val OR a.estado like :val')
+                ->setParameter('val', '%' . $value . '%');
+
+        }
+
+        return $qb
+            ->orderBy('p.id', 'ASC');
+        # es increible como baja el tiempo
+
         //->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        //   ->getQuery()
+        //  ->getResult()
+
     }
 
 }
