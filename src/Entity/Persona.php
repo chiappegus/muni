@@ -40,10 +40,15 @@ class Persona
     =            recientemente agregado            =
     ==============================================*/
     /**
-     *@ORM\Column(type="integer" ,  unique=true)
+     *@ORM\Column(type="string" ,  unique=true ,length=40)
      * @Gedmo\Slug(fields={"dni"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFilename;
 
     /**
      * Get slug
@@ -127,6 +132,18 @@ class Persona
         if ($intendente->getRelation() !== $this) {
             $intendente->setRelation($this);
         }
+
+        return $this;
+    }
+
+    public function getImageFilename():  ? string
+    {
+        return $this->imageFilename;
+    }
+
+    public function setImageFilename( ? string $imageFilename) : self
+    {
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }

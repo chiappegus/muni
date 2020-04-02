@@ -6,6 +6,8 @@
   
  <script src="{{asset('js/render_PersonaAdminController.js')}}"></script>   
 
+  <script src="{{asset('js/pepe.js')}}"></script>  
+
 {% endblock javascripts %}
 
 {% block title %} Manage Code {% endblock %}
@@ -163,8 +165,10 @@
                     {% endif %}
                 </td>
            <td>
+                   
                 <form action="{{ path('persona_delete', {'id': persona.id}) }} " method="post">
                             <input type="hidden" name="_method" value="DELETE" />
+                              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ persona.id) }}">
                             <button class="btn btn-danger btn-sm">borrar</button>
                 </td>
             </tr>

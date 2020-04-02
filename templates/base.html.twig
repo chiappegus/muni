@@ -49,12 +49,47 @@
                    style="color:blue; border: 1px solid powderblue;" href="#" >Mi banda</a></li>
                 <li class="nav-item"><a class="nav-link waves-effect waves-light" href="#">Novedades</a></li>
         </ul>
+
+
+  <div class="dropdown">
+    <button type="button" id="boton" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Personas
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item " href="{{path('persona_index')}}">Mostrar<span class="glyphicon glyphicon-heart"></span></a>
+    {#   <a class="dropdown-item" href="{{path('persona_show')}}">Personas Mostrar</a>
+    <a class="dropdown-item" href="{{path('persona_edit')}}">Personas Editar</a> #}
+      <a class="dropdown-item" href="{{path('persona_new')}}">Crear</a>
+    </div>
+  </div>
+
+   <div class="dropdown">
+    <button type="button" id="boton" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Intendentes
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item " href="{{path('intendente_index')}}">Mostrar<span class="glyphicon glyphicon-heart"></span></a>
+     {#--  <a class="dropdown-item" href="{{path('intendente_show')}}">Intendentes Mostrar</a>
+     <a class="dropdown-item" href="{{path('intendente_edit')}}">Personas Editar</a> #}
+      <a class="dropdown-item" href="{{path('intendente_new')}}">Crear</a>
+    </div>
+  </div>
+
+
+
+
+
+
+
         <ul class="nav navbar-nav navbar-right ">
             <li>
                 <a class="white-text waves-effect waves-light"  style="color:blue; border: 1px solid powderblue;margin-right:20px;" href="#">Cerrar Sesión</a>
 
             </li>
         </ul>
+
+
+
 
     
 
@@ -81,7 +116,7 @@
 
            <script src="{{asset('js/jquery-ias.min.js')}}"></script>  
            <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>  
-           <script src="{{asset('js/pepe.js')}}"></script>  
+          
            <script src="{{asset('js/popper.min.js')}}"></script>	
           <!--  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
 

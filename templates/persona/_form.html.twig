@@ -3,6 +3,20 @@
 
     {{ form_widget(form) }}
 
+    {#{{ form_row(form.imageFile) }}
+
+
+      {{ form_row(form.imageFile, {
+        attr: {
+            'placeholder': 'SOLO ESTE FUNCIONA PERO '
+        }
+    }) }}
+
+
+    {{ form_widget(form.imageFile, {'attr': {'placeholder': 'SOLO ESTE FUNCIONA PERO'}}) }}
+
+#}
+
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}

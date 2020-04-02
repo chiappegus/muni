@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
+
+
+
 {% block title %}New Intendente{% endblock %}
 
 {% block body %}
+	
 
 	<p>Username: {{ app.user.username ?? 'Anonymous user' }}</p>
 {% if app.debug %}
@@ -17,3 +21,7 @@
 
     <a href="{{ path('intendente_index') }}">back to list</a>
 {% endblock %}
+
+
+
+

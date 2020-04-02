@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Persona;
 use App\Form\PersonaType;
 use App\Repository\PersonaRepository;
+use App\Service\UploaderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,12 +31,13 @@ class PersonaController extends AbstractController
      * @Route("/new", name="persona_new", methods={"GET","POST"})
 
      */
-    function new (Request $request, PersonaRepository $personaRepository): Response {
+    function new (Request $request, PersonaRepository $personaRepository, UploaderHelper $uploaderHelper): Response {
 //dd($em);
         //
         //
         //
         //
+
         if (!isset($_GET["persona"])) {
 
             $persona = new Persona();
@@ -63,6 +65,23 @@ class PersonaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /*==============================
+            =            images            =
+            ==============================*/
+
+            // dd($form['imageFile']->getData());
+
+            //dd($form['imageFile']->getData());
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['imageFile']->getData();
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->uploadArticleImage($uploadedFile);
+
+                $persona->setImageFilename($newFilename);
+            }
+            /*=====  End of images  ======*/
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($persona);
             $entityManager->flush();
@@ -89,12 +108,29 @@ class PersonaController extends AbstractController
     /**
      * @Route("/{id}/edit", name="persona_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Persona $persona): Response
+    public function edit(Request $request, Persona $persona, UploaderHelper $uploaderHelper): Response
     {
         $form = $this->createForm(PersonaType::class, $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /*==============================
+            =            images            =
+            ==============================*/
+
+            // dd($form['imageFile']->getData());
+
+            //dd($form['imageFile']->getData());
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['imageFile']->getData();
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->uploadArticleImage($uploadedFile);
+
+                $persona->setImageFilename($newFilename);
+            }
+            /*=====  End of images  ======*/
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('persona_index');
