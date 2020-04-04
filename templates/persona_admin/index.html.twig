@@ -3,6 +3,8 @@
 
 {% block javascripts %}
   {{parent()}}
+
+    <script src="https://kit.fontawesome.com/6f13c9ae43.js" crossorigin="anonymous"></script>
   
  <script src="{{asset('js/render_PersonaAdminController.js')}}"></script>   
 
@@ -63,13 +65,13 @@
 
 
 
+    <h1 id='ruta_Admin' href="{{path('ruta_Admin')}}" hidden="true"></h1>
 
-
-
+  
     <form>
      <div class="form-group">
       <input class="form-control  col-sm-10 col-md-10 col-lg-10 valorDNI succes" name="q" type="text" placeholder="dni o nombre" id="num" value="{{app.request.query.get('q')}}">
-      <button type="submit" class="btn btn-primary buscar">Buscar</button>
+      <button type="submit" class="btn btn-primary buscar">Buscar <span class="fa fa-heart-o like-article"></span></button>
        </div>
      </form>
  

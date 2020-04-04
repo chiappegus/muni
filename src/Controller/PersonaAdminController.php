@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\PersonaRepository;
 use Gedmo\Sluggable\Util\Urlizer;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,9 +71,9 @@ class PersonaAdminController extends AbstractController
     /**
      * @Route("/admin/controlDni/{dni}", name="persona_admin_dni")
      */
-    public function controlDni($dni, PersonaRepository $personaRepository, Request $request)
+    public function controlDni($dni = null, PersonaRepository $personaRepository, Request $request, LoggerInterface $logger)
     {
-
+        $logger->info('Se esta Buscando por DNI , Function controlDni');
         $persona = $personaRepository->findBy(['dni' => $dni]);
 
         //dump(isset($persona[0]));
@@ -163,7 +164,7 @@ class PersonaAdminController extends AbstractController
     /**
      * @Route("/admin/arrayGus/{dni}", name="andaTodoMal")
      */
-    public function arrayGus($dni = null, PersonaRepository $personaRepository, Request $request)
+    public function arrayGus($dni, PersonaRepository $personaRepository, Request $request)
     {
         // make a database call or other logic
         // to get the "$max" most recent articlessetMaxResults(1)
@@ -251,6 +252,14 @@ class PersonaAdminController extends AbstractController
             $newFileName
         ));
 
+    }
+
+    /**
+     * @Route("/aca", name="ruta_Admin")
+     */
+    public function FunctionName(Request $request)
+    {
+        //($this->getParameter('kernel.project_dir'));
     }
 
 }

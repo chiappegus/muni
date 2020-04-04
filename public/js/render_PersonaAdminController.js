@@ -8,25 +8,30 @@ alert(MyAppUrlSettings.MyUsefulUrl);
 var $local = "http://localhost/muni/public";*/
 
 var pathname = window.location.pathname;
-alert(pathname);
+//alert(pathname);
 
 var URLactual = window.location;
-alert(URLactual);
+//alert(URLactual);
 
 
 var URLactual = window.location.href;
 var URLactual = jQuery(location).attr('href');
-alert(URLactual);
+//alert(URLactual);
    
 var URLdomain = window.location.host;
-alert(URLdomain);
+//alert(URLdomain);
 
 var URLhash = window.location.hash;
-alert(URLhash);
+//alert(URLhash);
 
 var URLsearch = window.location.search;
-alert(URLsearch);
+//alert(URLsearch);
 
+console.log ($('#ruta_Admin').attr('href'));
+var $directionAbs = $('#ruta_Admin').attr('href');
+
+var $res = $directionAbs.replace("aca", "");
+console.log($res);
     $('#num').on("keyup", function() {
    //$('button#boton').on('click', function(e) {
 
@@ -35,7 +40,8 @@ alert(URLsearch);
         
         $.ajax({
             method: 'GET',
-            url: $local + "/admin/arrayGus/" +  $('.valorDNI').val(),
+            //url: $local + "/admin/arrayGus/" +  $('.valorDNI').val(),
+            url: $res  + "admin/arrayGus/"+  $('.valorDNI').val(),
         }).done(function(data) {
             //console.log($('.valorDNI').val());
             console.log(data);

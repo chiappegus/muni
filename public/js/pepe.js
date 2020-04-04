@@ -4,10 +4,19 @@
 
 var $local = "http://localhost/muni/public";
 var $dni = $('.valorDNI').val()
+
+var $directionAbs = $('#ruta_Admin').attr('href');
+
+var $res = $directionAbs.replace("aca", "");
+//console.log($res);
+
+
 function consultaDNI($dni) {
+
     $.ajax({
         method: 'GET',
-        url: $local + "/admin/controlDni/" + $dni,
+        //url: $local + "/admin/controlDni/" + $dni,
+        url:   $res + "admin/controlDni/" + $dni,
     }).done(function(data) {
         //console.log($('.valorDNI').val());
         console.log(data.valor);
@@ -90,17 +99,19 @@ var $local = "http://localhost/muni/public";
         //alert( '¡Hola, Mundo!' );
     });
     $('.corazon').on('click', function(e) {
+        console.log($res);
         //alert( '¡Hola, Mundo!' );
         e.preventDefault();
         var URLactual = window.location;
-        alert(URLactual);
+        //alert(URLactual);
         var $link = $(e.currentTarget);
         //alert( $link[0] );
         var $dni = $('.valorDNI').val()
         var $local = "http://localhost/muni/public";
         $link.toggleClass('spinner-grow spinner-grow-sm').toggleClass('glyphicon glyphicon-envelope ');
         $.ajax({
-            url: $local + "/admin/controlDni/" + $dni,
+           // url: $local + "/admin/controlDni/" + $dni,
+            url: $res + "admin/controlDni/" + $dni,
             method: "GET",
             // method: 'GET',
             ///admin/persona
@@ -114,7 +125,7 @@ var $local = "http://localhost/muni/public";
             // data: "",
         }).done(function(data) {
             console.log($('.valorDNI').val());
-           // console.log(data.valor);
+           console.log(data.valor);
         });
         /* var MyAppUrlSettings = {
     			MyUsefulUrl : '@Url.Action("recentArticles","PersonaAdmin")'
