@@ -155,4 +155,5 @@ class PersonaController extends AbstractController
 
         return $this->redirectToRoute('persona_index');
     }
+
 }

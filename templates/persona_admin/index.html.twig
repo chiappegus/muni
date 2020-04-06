@@ -125,6 +125,7 @@
                 <th></th>
                 <th><small> Funcion </small></th>
                 <th><small> acciones </small></th>
+                <th><small> Imagenes </small></th>
             </tr>
         </thead>
          <tbody>
@@ -163,7 +164,7 @@
 
                      
                       
-                            </form>                      
+                                           
                     {% endif %}
                 </td>
            <td>
@@ -173,11 +174,31 @@
                               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ persona.id) }}">
                             <button class="btn btn-danger btn-sm">borrar</button>
                 </td>
+
+           
+               <td>
+                  
+
+               
+
+                  {% if persona.PersonaImagePath!=""%}
+
+                   <img class="img rounded-circle img-fluid" src="{{ asset(persona.PersonaImagePath) }}" />
+                   
+                 {#  <img  class="img rounded-circle img-fluid"  width="460" height="345"  src="/muni/public/{{ persona.PersonaImagePath=='uploads/persona_image/'  ? ' ' :persona.PersonaImagePath }}" src="{{ asset('uploads/persona_image/bill-5e861fdd54c66.jpeg') }}">#}
+                  {% endif %}
+                
+              </td>
             </tr>
+
+
         {% else %}
             <tr>
                 <td colspan="4" class="text-center">Sin Resultados</td>
             </tr>
+
+
+            
         {% endfor %}
         </tbody>
     </table>

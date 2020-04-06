@@ -147,4 +147,12 @@ class Persona
 
         return $this;
     }
+
+    public function getPersonaImagePath()
+    {
+        if ($this->getImageFilename() != "") {
+
+            return 'uploads/persona_image/' . $this->getImageFilename();
+        }
+    }
 }
