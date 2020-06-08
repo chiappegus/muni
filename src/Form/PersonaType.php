@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Intendente;
 use App\Entity\Persona;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +26,19 @@ class PersonaType extends AbstractType
             ->add('nombre')
             ->add('apellido')
             ->add('dni')
-            ->add('intendente');
+            ->add('intendente', EntityType::class, [
+                'class'           => Intendente::class,
+                //'choice_label'    => 'id', //'nombre',
+                'choice_label'    => function (Intendente $intendente) {
+                    return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());
+                },
+
+                'label'           => 'ID_intendente :)',
+                //'placeholder'  => 'Selecciona el estado del intendente o id',
+                'invalid_message' => 'No deberias hacer eso tengo tu ip',
+
+            ])
+        ;
 
         $imageConstraints = [
             new Image([
@@ -33,7 +47,7 @@ class PersonaType extends AbstractType
                 //'mimeTypes'        => ["image/gif", "image/png"],
                 'mimeTypes'              => "image/*",
                 //'mimeTypes' => "image/png",
-                'maxSize'                => "8M",
+                'maxSize'                => "2M",
                 'mimeTypesMessage'       => 'El archivo no es una imagen válida.',
                 'sizeNotDetectedMessage' => 'El archivo no es una imagen válida',
                 // 'maxSize' => '5M',
@@ -43,7 +57,7 @@ class PersonaType extends AbstractType
 
         if (!$isEdit || !$persona->getImageFilename()) {
             $imageConstraints[] = new NotNull([
-                'message' => 'Por favor Subi una IMAGEN menor a 1MB',
+                'message' => 'Por favor Subi una IMAGEN menor a 2MB',
             ]);
         };
         // dd($imageConstraints);

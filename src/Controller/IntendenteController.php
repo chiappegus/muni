@@ -128,7 +128,7 @@ class IntendenteController extends AbstractController
      */
     public function edit(Request $request, Intendente $intendente): Response
     {
-
+        //dd($intendente);
         $form = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);
         //dd($intendente-> getId() );

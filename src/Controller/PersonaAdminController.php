@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Persona;
 use App\Repository\PersonaRepository;
 use Gedmo\Sluggable\Util\Urlizer;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assertion;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PersonaAdminController extends AbstractController
 {
@@ -255,8 +259,174 @@ class PersonaAdminController extends AbstractController
     }
 
     /**
-     * @Route("/aca", name="ruta_Admin")
+     * @Route("/admin/upload/testss", name="upload_test_GUS" , methods={"GET","POST"})
      */
+    public function temporaryUploadActionss(Request $request, ValidatorInterface $validator)
+    {
+
+        if ($request->isXmlHttpRequest()) {
+
+            /** @var UploadedFile $uploadedFile
+             */
+            $uploadedFile = $request->files->get('files');
+            $directionOld = $request->request->get('directionOld');
+            //dd($directionOld);
+
+            if ($uploadedFile == null) {
+
+                $this->addFlash('error', 'Archivo No Valido');
+                $Persona = ['PersonaImagePath' => $directionOld];
+                return $this->render(
+                    'persona/_imagen_form.html.twig',
+                    ['persona' => $Persona]
+                );
+            }
+            /*==================================
+            =            validator             =
+            ==================================*/
+            $errors = $validator->validate($uploadedFile, new Assertion\Image([
+                //'minWidth'  => 200,
+                //'maxWidth'  => 400,
+                //'minHeight' => 200,
+                //'maxHeight' => 400,
+                'maxSize'   => '2M',
+                //'maxSize'   => '1024k',
+                'mimeTypes' => [
+                    'image/*',
+/*                    'application/pdf',
+'application/msword',
+'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+'text/plain',*/
+                ],
+            ]));
+
+            if ($errors->count() > 0) {
+                // ($errors[0]->getMessage());
+                $errors = $errors[0];
+                $this->addFlash('error', $errors->getMessage());
+                $Persona = ['PersonaImagePath' => $directionOld];
+                return $this->render(
+                    'persona/_imagen_form.html.twig',
+                    ['persona' => $Persona]
+                );
+
+                // aca poner mejor enfasis :) y poner flash mensajes :)
+                // https: //symfonycasts.com/screencast/symfony-uploads/mime-type-validation
+            }
+
+            /*=====  End of validator   ======*/
+
+            /*=======================================
+            =            nuevo validator   sin aplicacion
+            faltaria           =
+            =======================================*/
+            /*
+            $violations = $validator->validate(
+            $uploadedFile,
+            new File([
+            'maxSize'   => '5M',
+            'mimeTypes' => [
+            'image/*',
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'text/plain',
+            ],
+            ])
+            );*/
+
+            /*=====  End of nuevo validator  ======*/
+
+            else {
+
+                $nombre       = $uploadedFile->getPathname();
+                $mimeTypes    = $uploadedFile->getClientMimeType();
+                $originalName = $uploadedFile->getClientOriginalName();
+                $errores      = $uploadedFile->getErrorMessage();
+                $size         = $uploadedFile->getSize();
+
+                $originalFilename = pathinfo($originalName, PATHINFO_FILENAME);
+                $newFileName      = Urlizer::urlize($originalFilename) . '_' . uniqid() . '.' . $uploadedFile->guessExtension();
+
+                //$foo          = $request->query->get('imageFile');
+                $uploadedFile->move($this->getParameter('kernel.project_dir') . '/public/TEMP', $newFileName);
+                /* return new JsonResponse(['valor' => $nombre,
+                'valors'                         => $mimeTypes,
+                'errores'                        => $errores,
+                'size'                           => $size,
+                'newFileName'                    => $newFileName,
+                'src'                            => '/public/TEMP/' . $newFileName,
+                'nameOriginal'                   => $originalName]);
+                 */
+                // persona.PersonaImagePath
+                // $Persona = ['PersonaImagePath' => '/muni/public/TEMP/' . $newFileName];
+                // http://localhost/muni/public/TEMP/01-borrar_5ea9c7abadf50.png
+
+                $patrón = '^muni^'; #^(10|172\.16|192\.168)\.#'
+
+                if (preg_match($patrón, $_SERVER['PHP_SELF'])) {
+                    $ruta = '/muni/public/TEMP/';
+                } else {
+                    $ruta = '/TEMP/';
+
+                }
+                $Persona = ['PersonaImagePath' => $ruta . $newFileName];
+
+                return $this->render(
+                    'persona/_imagen_form.html.twig',
+                    ['persona' => $Persona]
+                );
+
+            }} else {
+
+            return new JsonResponse(['valor' => "me estas hakeando"]);
+        }
+//$form->handleRequest($request);
+
+//$uri = $_SERVER['REQUEST_URI'];
+        //$foo = $request->query->get('imageFile', 'originalName');
+        // $foo = $request->files->get('imageFile');
+        //$foo = $request->getPathInfo();
+        //  echo 'The value of the "foo" parameter is: ' . $foo;
+
+// return new JsonResponse($foo);
+
+//return new JsonResponse(['valor' => $uploadedFile]);
+        // dd($uploadedFile);
+
+/*=================================
+=            seguridad            =
+
+ejemplo
+5e82c8297868a_01.jpg
+para path para saber bien en donde esta
+
+ahora al reves 01_dasdaa_jpg
+se usa Urlizer por lo espacion
+=================================*/
+
+//  $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+// $newFileName = Urlizer::urlize($originalFileName) . '_' . uniqid() . '.' . $uploadedFile->guessExtension();
+
+/*=====  End of seguridad  ======*/
+
+// dd($request->files->get('image'));
+
+//  $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+        //  dd($uploadedFile->move($destination,
+        //       $newFileName
+        //    ));
+
+    }
+
+/**
+ * @Route("/aca", name="ruta_Admin")
+ */
     public function FunctionName(Request $request)
     {
         //($this->getParameter('kernel.project_dir'));

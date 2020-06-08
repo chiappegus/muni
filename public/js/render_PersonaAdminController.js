@@ -36,7 +36,13 @@ console.log($res);
    //$('button#boton').on('click', function(e) {
 
         //alert( '¡Hola, Mundo!' );
-       
+       // ver => window.location hash: ""
+// host: "127.0.0.1:8000"
+// hostname: "127.0.0.1"
+// href: "http://127.0.0.1:8000/admin/persona"
+// origin: "http://127.0.0.1:8000"
+// pathname: "/admin/persona"
+// port: "8000"
         
         $.ajax({
             method: 'GET',
