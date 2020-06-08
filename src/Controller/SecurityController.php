@@ -22,4 +22,13 @@ class SecurityController extends AbstractController
             'error'         => $error,
         ]);
     }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     */
+    public function logout()
+    {
+        throw new Exception("fuimos interceptados antes de entrar acaS", 1);
+
+    }
 }
