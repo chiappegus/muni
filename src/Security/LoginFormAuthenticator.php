@@ -131,7 +131,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 
     public function supportsRememberMe()
     {
-        // todo
+        return true;
     }
 
     protected function getLoginUrl()
