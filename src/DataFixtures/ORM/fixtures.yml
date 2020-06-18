@@ -37,7 +37,14 @@ App\Entity\Persona:
     nombre: <gustavoNombreslatinos()> 
     #randomElement(1, 3, 5, 7, 9)
     apellido: <lastName()>
-    dni: <numberBetween(1500000,40000000)>
+    dni (unique): <numberBetween(1500000,40000000)>
+    #ver lo de unique https://github.com/fzaninotto/Faker
+    #email: <safeEmail()>
+    #https://github.com/nelmio/alice/blob/master/doc/complete-reference.md#yaml
+    #email: '<current()>\@gustavo.com'
+    #email: '<current()>\@gustavo.com'
+    email (unique): <safeEmail()>
+    
 #     quote: <buffyQuote()>
 #     pepe: '@ComidaPreferida*'
 #     #quote: <text()>

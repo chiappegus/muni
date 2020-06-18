@@ -66,7 +66,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
-        return $this->userRepository->findOneBy(['nombre' => $credentials['email']]);
+        return $this->userRepository->findOneBy(['email' => $credentials['email']]);
 
     }
 

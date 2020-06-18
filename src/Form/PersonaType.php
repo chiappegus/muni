@@ -28,7 +28,7 @@ class PersonaType extends AbstractType
             ->add('dni')
             ->add('intendente', EntityType::class, [
                 'class'           => Intendente::class,
-                //'choice_label'    => 'id', //'nombre',
+                //'choice_label'    => 'id', //'nombre', ver que
                 'choice_label'    => function (Intendente $intendente) {
                     return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());
                 },
@@ -38,6 +38,7 @@ class PersonaType extends AbstractType
                 'invalid_message' => 'No deberias hacer eso tengo tu ip',
 
             ])
+            ->add('email')
         ;
 
         $imageConstraints = [

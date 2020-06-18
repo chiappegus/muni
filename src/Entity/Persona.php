@@ -61,6 +61,11 @@ class Persona implements UserInterface
     private $imageFilename;
 
     /**
+     * @ORM\Column(type="string", length = 191 ,unique=true )
+     */
+    private $email;
+
+    /**
      * Get slug
      * @return
      */
@@ -224,7 +229,7 @@ class Persona implements UserInterface
      */
     public function getUsername()
     {
-        return $this->nombre;
+        return $this->email;
         //throw new \Exception('Method getUsername() is not implemented.');
     }
 
@@ -237,5 +242,17 @@ class Persona implements UserInterface
     public function eraseCredentials()
     {
         // throw new \Exception('Method eraseCredentials() is not implemented.');
+    }
+
+    public function getEmail() :  ? string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email) : self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }
