@@ -1,91 +1,87 @@
 <?php
- 
+
 namespace App\DataFixtures\ORM;
- 
-use Faker\Provider\Base as BaseProvider;
+
 use Faker\Generator;
- 
+use Faker\Provider\Base as BaseProvider;
+
 class BuffyProvider extends BaseProvider
 {
+
     public function __construct(Generator $generator)
     {
-        parent::__construct($generator);
+
+        //parent::__construct($generator);
+
+        $this->generator = $generator;
+
     }
- 
+
     public function buffyQuote()
     {
         $key = array_rand($this->quotes);
         return $this->quotes[$key];
     }
-    
-   /* public function gustavoName()
-    {
-        $key = array_rand($this->quotes);
-        return $this->quotes[$key];
-    }*/
 
-       public function gustavoNmujereslatinas()
+/* public function gustavoName()
+{
+$key = array_rand($this->quotes);
+return $this->quotes[$key];
+}*/
+
+    public function gustavoNmujereslatinas()
     {
         $key = array_rand($this->mujeres);
         return $this->mujeres[$key];
     }
 
-
-
-       public function gustavoNHombrelatinos()
+    public function gustavoNHombrelatinos()
     {
         $key = array_rand($this->hombres);
         return $this->hombres[$key];
     }
 
     public function gustavoNombreslatinos()
-    {   $Seleccion = array_rand($sexo=["mujeres","Hombres"]);
-        if ($Seleccion=="mujeres") {
-             return $this-> gustavoNmujereslatinas();
-        }else {
+    {
+        $Seleccion = array_rand($sexo = ["mujeres", "Hombres"]);
+        if ($Seleccion == "mujeres") {
+            return $this->gustavoNmujereslatinas();
+        } else {
             return $this->gustavoNHombrelatinos();
         }
-       
+
     }
 
 #https://listas.20minutos.es/lista/las-comidas-mas-populares-y-sencillas-del-mundo-por-paises-425492/
     public function gustavoPComidas()
-    {    $Seleccion = array_rand($sexo=["TORTILLA DE PATATAS",
-        "PIZZA(Italia)",
-        "HUEVOS FRITOS CON CHORIZO(España)",
-        "BOCATA DE CALAMARES(España)",
-        "SPAGUETTI CARBONARA (Italia)",
-        "SÁNDWICH(Inglaterra)",
-        "SAN JACOBO (Suiza)",
-        "TARTA SACHER (Austria)",
-        "SUSHI (Japón)",
-        "ROLLITOS DE PRIMAVERA (China)",
-        "MOUSSAKA (Grecia)",
-        "LA FONDUE (Suiza)",
-        "SARDINHAS ASSADAS (Portugal)",
-        "CREPES (Francia)",
-        "FALAFEL (Egipto)",
-        "FISH AND CHIPS (Inglaterra)",
-        "CHORIPÁN (Argentina)",
-        "CEVICHE DE CAMARÓN (Ecuador)",
-        "AREPAS (Colombia)"
+    {
+        $Seleccion = array_rand($sexo = ["TORTILLA DE PATATAS",
+            "PIZZA(Italia)",
+            "HUEVOS FRITOS CON CHORIZO(España)",
+            "BOCATA DE CALAMARES(España)",
+            "SPAGUETTI CARBONARA (Italia)",
+            "SÁNDWICH(Inglaterra)",
+            "SAN JACOBO (Suiza)",
+            "TARTA SACHER (Austria)",
+            "SUSHI (Japón)",
+            "ROLLITOS DE PRIMAVERA (China)",
+            "MOUSSAKA (Grecia)",
+            "LA FONDUE (Suiza)",
+            "SARDINHAS ASSADAS (Portugal)",
+            "CREPES (Francia)",
+            "FALAFEL (Egipto)",
+            "FISH AND CHIPS (Inglaterra)",
+            "CHORIPÁN (Argentina)",
+            "CEVICHE DE CAMARÓN (Ecuador)",
+            "AREPAS (Colombia)",
 
         ]);
-     
-            return $sexo[$Seleccion];
-        
-       
+
+        return $sexo[$Seleccion];
+
     }
 
-
-
-    
-
-    
-
-
- 
-    // src: https://thoughtcatalog.com/jayson-flores/2014/06/the-25-best-buffy-the-vampire-slayer-quotes/
+// src: https://thoughtcatalog.com/jayson-flores/2014/06/the-25-best-buffy-the-vampire-slayer-quotes/
     private $quotes = [
         "The hardest thing in this world is to live in it. Be brave. Live.",
         "Out. For. A. Walk. Bitch.",
@@ -114,8 +110,8 @@ class BuffyProvider extends BaseProvider
         "I’m the thing that monsters have nightmares about. And right now, you and me are gonna show ‘em why.",
     ];
     private $mujeres = [
-    "Abigail", "Abril", "Agustina", "Alaia", "Alana", "Alba Luz", "Alejandra", "Alicia", "Altagracia", "Alma", "Antonella", "Antonia", "Ariana", "Ashley", "Bárbara", "Beatriz", "Belén", "Briana", "Brithany", "Camila", "Caridad", "Carmen", "Carmen Luisa", "Carolina", "Catalina", "Celeste", "Claudia", "Concepción", "Daniela", "Danna", "Dayana", "Del Carmen", "Delfina", "Domenica", "Dulce María", "Elizabeth", "Emilia", "Emily", "Emma", "Esmeralda", "Evelyn", "Florencia", "Francesca/Francisca", "Gabriela", "Génesis", "Guadalupe", "Isabella", "Isidora", "Jimena", "Josefa", "Josefina", "Juana", "Julia", "Julieta", "Kamila", "Karla", "Karla Patricia", "Kiara", "Kimberly", "Laura", "Leticia", "Lidia", "Lisandra", "Liz", "Luana", "Lucía", "Luciana", "Luisa", "Luisa Fernanda", "Luz", "Luz María", "Mabel", "Maite", "Margarita", "María", "María Ángeles", "María Carmen", "María Celeste", "María del Carmen", "María Dolores", "María Elena", "María Fernanda", "María Isabel", "María Jesús", "María José", "María Luisa", "María Paula", "María Teresa", "Mariana", "Mariangel", "Mariapaz", "Maritza", "Martha", "Martina", "Mayelin", "Melany", "Mercedes", "Mia", "Mikaela", "Morena", "Noemí", "Odalys", "Olga Marina", "Olivia", "Patricia", "Paula", "Ramona", "Raquel", "Reina Isabel", "Rosa", "Rosmery", "Roxana", "Salomé", "Samantha", "Sara Sofía", "Sara Valentina", "Silvia", "Sofía", "Sonia", "Sophia", "Tania", "Teresa", "Trinidad", "Valentina", "Valeria", "Vanessa", "Verónica", "Victoria", "Ximena", "Yadira", "Yaima", "Yamileth", "Yanelis", "Yanet", "Zoe",];
+        "Abigail", "Abril", "Agustina", "Alaia", "Alana", "Alba Luz", "Alejandra", "Alicia", "Altagracia", "Alma", "Antonella", "Antonia", "Ariana", "Ashley", "Bárbara", "Beatriz", "Belén", "Briana", "Brithany", "Camila", "Caridad", "Carmen", "Carmen Luisa", "Carolina", "Catalina", "Celeste", "Claudia", "Concepción", "Daniela", "Danna", "Dayana", "Del Carmen", "Delfina", "Domenica", "Dulce María", "Elizabeth", "Emilia", "Emily", "Emma", "Esmeralda", "Evelyn", "Florencia", "Francesca/Francisca", "Gabriela", "Génesis", "Guadalupe", "Isabella", "Isidora", "Jimena", "Josefa", "Josefina", "Juana", "Julia", "Julieta", "Kamila", "Karla", "Karla Patricia", "Kiara", "Kimberly", "Laura", "Leticia", "Lidia", "Lisandra", "Liz", "Luana", "Lucía", "Luciana", "Luisa", "Luisa Fernanda", "Luz", "Luz María", "Mabel", "Maite", "Margarita", "María", "María Ángeles", "María Carmen", "María Celeste", "María del Carmen", "María Dolores", "María Elena", "María Fernanda", "María Isabel", "María Jesús", "María José", "María Luisa", "María Paula", "María Teresa", "Mariana", "Mariangel", "Mariapaz", "Maritza", "Martha", "Martina", "Mayelin", "Melany", "Mercedes", "Mia", "Mikaela", "Morena", "Noemí", "Odalys", "Olga Marina", "Olivia", "Patricia", "Paula", "Ramona", "Raquel", "Reina Isabel", "Rosa", "Rosmery", "Roxana", "Salomé", "Samantha", "Sara Sofía", "Sara Valentina", "Silvia", "Sofía", "Sonia", "Sophia", "Tania", "Teresa", "Trinidad", "Valentina", "Valeria", "Vanessa", "Verónica", "Victoria", "Ximena", "Yadira", "Yaima", "Yamileth", "Yanelis", "Yanet", "Zoe"];
 
-    private  $hombres = ["Adrián", "Agustín", "Alberto", "Alejandro", "Alexander", "Alexis", "Alonso", "Andrés Felipe", "Ángel", "Anthony", "Antonio", "Bautista", "Benicio", "Benjamín", "Carlos", "Carlos Alberto", "Carlos Eduardo", "Carlos Roberto", "César", "Cristóbal", "Daniel", "David", "Diego", "Dylan", "Eduardo", "Emiliano", "Emmanuel", "Enrique", "Erik", "Ernesto", "Ethan", "Fabián", "Facundo", "Felipe", "Félix", "Félix María", "Fernando", "Francisco", "Francisco Javier", "Gabriel", "Gaspar", "Gustavo Adolfo", "Hugo", "Ian", "Iker", "Isaac", "Jacob", "Javier", "Jayden", "Jeremy", "Jerónimo", "Jesús", "Jesús Antonio", "Jesús Víctor", "Joaquín", "Jorge", "Jorge Alberto", "Jorge Luis", "José", "José Antonio", "José Daniel", "José David", "José Francisco", "José Gregorio", "José Luis", "José Manuel", "José Pablo", "Josué", "Juan", "Juan Ángel", "Juan Carlos", "Juan David", "Juan Esteban", "Juan Ignacio", "Juan José", "Juan Manuel", "Juan Pablo", "Juan Sebastián", "Julio", "Julio Cesar", "Justin", "Kevin", "Lautaro", "Liam", "Lian", "Lorenzo", "Lucas", "Luis", "Luis Alberto", "Luis Emilio", "Luis Fernando", "Manuel", "Manuel Antonio", "Marco Antonio", "Mario", "Martín", "Mateo", "Matías", "Maximiliano", "Maykel", "Miguel", "Miguel Ángel", "Nelson", "Noah", "Oscar", "Pablo", "Pedro", "Rafael", "Ramón", "Raúl", "Ricardo", "Rigoberto", "Roberto", "Rolando", "Samuel", "Samuel David", "Santiago", "Santino", "Santos", "Sebastián", "Thiago", "Thiago Benjamín", "Tomás", "Valentino", "Vicente", "Víctor", "Víctor Hugo", ];
+    private $hombres = ["Adrián", "Agustín", "Alberto", "Alejandro", "Alexander", "Alexis", "Alonso", "Andrés Felipe", "Ángel", "Anthony", "Antonio", "Bautista", "Benicio", "Benjamín", "Carlos", "Carlos Alberto", "Carlos Eduardo", "Carlos Roberto", "César", "Cristóbal", "Daniel", "David", "Diego", "Dylan", "Eduardo", "Emiliano", "Emmanuel", "Enrique", "Erik", "Ernesto", "Ethan", "Fabián", "Facundo", "Felipe", "Félix", "Félix María", "Fernando", "Francisco", "Francisco Javier", "Gabriel", "Gaspar", "Gustavo Adolfo", "Hugo", "Ian", "Iker", "Isaac", "Jacob", "Javier", "Jayden", "Jeremy", "Jerónimo", "Jesús", "Jesús Antonio", "Jesús Víctor", "Joaquín", "Jorge", "Jorge Alberto", "Jorge Luis", "José", "José Antonio", "José Daniel", "José David", "José Francisco", "José Gregorio", "José Luis", "José Manuel", "José Pablo", "Josué", "Juan", "Juan Ángel", "Juan Carlos", "Juan David", "Juan Esteban", "Juan Ignacio", "Juan José", "Juan Manuel", "Juan Pablo", "Juan Sebastián", "Julio", "Julio Cesar", "Justin", "Kevin", "Lautaro", "Liam", "Lian", "Lorenzo", "Lucas", "Luis", "Luis Alberto", "Luis Emilio", "Luis Fernando", "Manuel", "Manuel Antonio", "Marco Antonio", "Mario", "Martín", "Mateo", "Matías", "Maximiliano", "Maykel", "Miguel", "Miguel Ángel", "Nelson", "Noah", "Oscar", "Pablo", "Pedro", "Rafael", "Ramón", "Raúl", "Ricardo", "Rigoberto", "Roberto", "Rolando", "Samuel", "Samuel David", "Santiago", "Santino", "Santos", "Sebastián", "Thiago", "Thiago Benjamín", "Tomás", "Valentino", "Vicente", "Víctor", "Víctor Hugo"];
+
 }
-

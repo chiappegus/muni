@@ -71,6 +71,11 @@ class Persona implements UserInterface
     private $roles = [];
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
      * Get slug
      * @return
      */
@@ -213,6 +218,7 @@ class Persona implements UserInterface
     public function getPassword()
     {
         //throw new \Exception('Method getPassword() is not implemented.');
+        return $this->password;
     }
 
     /**
@@ -261,9 +267,16 @@ class Persona implements UserInterface
         return $this;
     }
 
-    public function setRoles(?array $roles): self
+    public function setRoles( ? array $roles) : self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }

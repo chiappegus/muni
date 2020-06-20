@@ -24,7 +24,7 @@ App\Entity\Buffy:
 
 App\Entity\Persona:
   #buffy_{1..20}:
-  persona_{1..1000}:
+  persona_{1..1}:
     #name: <name()>
     #name: <gustavoName()>
     #name: <gustavoNmujereslatinas()>
@@ -44,6 +44,16 @@ App\Entity\Persona:
     #email: '<current()>\@gustavo.com'
     #email: '<current()>\@gustavo.com'
     email (unique): <safeEmail()>
+    #encodePassword
+    # ver https://diegomalagon.com/api-rest-con-symfony-4/
+    #php bin/console security:encode-password 'engage' 
+    #register bin/console security:encode-password  'engage'
+    #$argon2i$v=19$m=65536,t=4,p=1$SWxVaVA5ZUZsZUJjdG54WQ$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew
+    password: '1\$SWxVaVA5ZUZsZUJjdG54WQ\$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew'
+    #password: <gustavoPass()>
+   
+    #Password:  sdasadsda
+    #encodePassword: iliketurtles
     
 #     quote: <buffyQuote()>
 #     pepe: '@ComidaPreferida*'
