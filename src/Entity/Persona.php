@@ -66,6 +66,11 @@ class Persona implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $roles = [];
+
+    /**
      * Get slug
      * @return
      */
@@ -252,6 +257,13 @@ class Persona implements UserInterface
     public function setEmail(string $email) : self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
