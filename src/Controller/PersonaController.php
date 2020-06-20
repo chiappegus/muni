@@ -115,6 +115,8 @@ class PersonaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //dd($form);
+
             /*==============================
             =            images            =
             ==============================*/

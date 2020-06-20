@@ -28,13 +28,17 @@ class PersonaType extends AbstractType
             ->add('dni')
             ->add('intendente', EntityType::class, [
                 'class'           => Intendente::class,
+                //'mapped'          => false,
+                'empty_data'      => null,
+                'required'        => false,
+                //array('maybe', 'no', 'yes'),
                 //'choice_label'    => 'id', //'nombre', ver que
+
                 'choice_label'    => function (Intendente $intendente) {
-                    return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());
-                },
+                    return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());},
 
                 'label'           => 'ID_intendente :)',
-                //'placeholder'  => 'Selecciona el estado del intendente o id',
+                'placeholder'     => 'Selecciona el estado del intendente o id',
                 'invalid_message' => 'No deberias hacer eso tengo tu ip',
 
             ])
