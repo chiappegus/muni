@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -16,19 +17,22 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\isTokenValid;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
-
+    use TargetPathTrait;
     private $userRepository;
     private $router;
     private $csrfTokenManager;
+    private $passwordEncoder;
 
-    public function __construct(PersonaRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(PersonaRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->userRepository   = $userRepository;
         $this->router           = $router;
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->passwordEncoder  = $passwordEncoder;
     }
 
     public function supports(Request $request)
@@ -76,7 +80,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         // todo
         // dd($user);
         // only needed if we need to check a password - we'll do that later!
-        return true;
+        //return true;
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        // return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -120,13 +126,21 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         //dd('success!');
         //
         //dd('app.Username');
-        return new RedirectResponse($this->router->generate('persona_admin'));
+        //dd($this->getTargetPath($request->getSession(), $providerKey));
+
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            //dd($targetPath);
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->router->generate('persona_index'));
         //dd($this->router);
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
 
+        return new RedirectResponse($this->router->generate('app_login'));
     }
 
     public function supportsRememberMe()
