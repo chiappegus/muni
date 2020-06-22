@@ -13,11 +13,16 @@ class LoadFixtures extends Fixture
     {
         //$loader = new NativeLoader();
 
+        /*====================================
+        =            aca lo borro            =
+        ====================================*/
         $loader    = new AppNativeLoader();
         $objectSet = $loader->loadFile(__DIR__ . '/fixtures.yml')->getObjects();
         foreach ($objectSet as $object) {
             $manager->persist($object);
         }
+
+        /*=====  End of aca lo borro  ======*/
 
         $manager->flush();
     }

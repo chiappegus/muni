@@ -21,20 +21,37 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
 
             $user = new Persona();
-            $user->setEmail(sprintf('gus%d@gus.com', $i));
-            $user->setNombre(sprintf('gus%d', $i));
-            $user->setApellido(sprintf('gus%d', $i));
+            $user->setEmail(sprintf('gust%d@gus.com', $i));
+            $user->setNombre(sprintf('gust%d', $i));
+            $user->setApellido(sprintf('gust%d', $i));
             $user->setDni(26252 + $i);
+            $user->setRoles(['ROLE_ADMIN']);
 
             //$user->setNombre($this->faker->firstName);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'engage'
+                'gus'
             ));
             $manager->persist($user);
+            $manager->flush();
 
         };
-        $manager->flush();
+        /* for ($i = 0; $i < 20; $i++) {
+
+    $user->setEmail(sprintf('gus%d@gus.com', $i));
+    $user->setNombre(sprintf('gus%d', $i));
+    $user->setApellido(sprintf('gus%d', $i));
+    $user->setDni(26258210 + $i);
+    $user->setRoles(["ROLE_ADMIN"]);
+    //$user->setNombre($this->faker->firstName);
+    $user->setPassword($this->passwordEncoder->encodePassword(
+    $user,
+    'gus'
+    ));
+    $manager->persist($user);
+    };
+
+    $manager->flush();*/
 
     }
 }

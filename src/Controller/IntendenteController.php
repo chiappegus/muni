@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Intendente;
 use App\Form\IntendenteType;
 use App\Repository\IntendenteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/intendente")
+ * @IsGranted("ROLE_USER")
  */
 class IntendenteController extends AbstractController
 {
@@ -27,8 +29,17 @@ class IntendenteController extends AbstractController
 
     /**
      * @Route("/new", name="intendente_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     function new (Request $request): Response{
+        /*==================================================
+        =            permisos sobre controllers            =
+        ==================================================*/
+
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        /*=====  End of permisos sobre controllers  ======*/
+
         $intendente = new Intendente();
         $form       = $this->createForm(IntendenteType::class, $intendente);
         $form->handleRequest($request);

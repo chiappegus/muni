@@ -1,24 +1,20 @@
-App\Entity\ComidaPreferidad:
-  #buffy_{1..20}:
-  ComidaPreferida{1..10}:
-    nombre: <gustavoPComidas()>
-  ComidaPreferida:
-    nombre: <gustavoPComidas()>
+# App\Entity\Buffy:
+#   #buffy_{1..20}:
+#   buffy_{1..10}:
+#     #name: <name()>
+#     #name: <gustavoName()>
+#     #name: <gustavoNmujereslatinas()>
+#     name: <gustavoNombreslatinos()>
+#     quote: <buffyQuote()>
+#     pepe: '@ComidaPreferida*'
+#     #quote: <text()>
 
-
-
-
-App\Entity\Buffy:
-  #buffy_{1..20}:
-  buffy_{1..10}:
-    #name: <name()>
-    #name: <gustavoName()>
-    #name: <gustavoNmujereslatinas()>
-    name: <gustavoNombreslatinos()>
-    quote: <buffyQuote()>
-    pepe: '@ComidaPreferida*'
-    #quote: <text()>
-
+# App\Entity\ComidaPreferidad:
+#   #buffy_{1..20}:
+#   ComidaPreferida{1..10}:
+#     nombre: <gustavoPComidas()>
+#   ComidaPreferida:
+#     nombre: <gustavoPComidas()>
 
 
 
@@ -49,8 +45,9 @@ App\Entity\Persona:
     #php bin/console security:encode-password 'engage' 
     #register bin/console security:encode-password  'engage'
     #$argon2i$v=19$m=65536,t=4,p=1$SWxVaVA5ZUZsZUJjdG54WQ$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew
-    password: '1\$SWxVaVA5ZUZsZUJjdG54WQ\$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew'
+    password: '\$argon2i\$v=19\$m=65536,t=4,p=1\$SWxVaVA5ZUZsZUJjdG54WQ\$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew'
     #password: <gustavoPass()>
+    roles: [ROLE_ADMIN]
    
     #Password:  sdasadsda
     #encodePassword: iliketurtles
