@@ -75,19 +75,37 @@
     </div>
   </div>
 
+ 
+      
+              <ul class="dropdown">
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown" style="color:blue; border: 1px ;margin-right:20px;" >
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <img class="nav-profile-img rounded-circle" src="{{ asset('images/default.jpg') }}" height="45em">
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ path('persona_show', {'id':app.user.id})}}">Profile</a>
+                                <a class="dropdown-item" href="#">Create Post</a>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout{{app.user.id}}</a> 
+                            </div>
+                        </li>
 
+                       {% else %}
+                        <li class="nav-item">
+                            <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+           
 
-
-
-
-
+        {#  
         <ul class="nav navbar-nav navbar-right ">
             <li>
                 <a class="white-text waves-effect waves-light"  style="color:blue; border: 1px solid powderblue;margin-right:20px;" href="{{ path('app_login') }}">Cerrar Sesión</a>
 
             </li>
         </ul>
-
+#}
 
 
 
