@@ -7,6 +7,7 @@ use App\Repository\PersonaRepository;
 use Gedmo\Sluggable\Util\Urlizer;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -429,7 +430,49 @@ se usa Urlizer por lo espacion
  */
     public function FunctionName(Request $request)
     {
-        //($this->getParameter('kernel.project_dir'));
+        dd($this->getParameter('kernel.project_dir'));
+    }
+
+    /**
+     * @Route("/supra", name="switch_SUPRA",methods={"GET","POST"})
+     * @IsGranted("ROLE_SUPRA")
+     */
+
+    public function supra($dni = null, PersonaRepository $personaRepository, Request $request, LoggerInterface $logger, PaginatorInterface $paginator)
+    {
+        $logger->info('Se esta Buscando por DNI , Function controlDni');
+        $persona = $personaRepository->findBy(['dni' => $dni]);
+
+        $role = $request->attributes->get('_is_granted');
+        $role = $role[0];
+        //dd($role->getAttributes());
+        dump($role->getAttributes());
+
+        /*    return new JsonResponse(['valor' => isset($persona[0]),
+        'direccion'                      => $this->getParameter('kernel.project_dir'),
+        "RoutePermison"                  => $request->attributes->get('_route'),
+        'Permision'                      => $role->getAttributes(),
+        ]);
+
+        return $this->render('persona/index.html.twig', [
+        'personas'           => $personaRepository->findAll(),
+        'nombre_controlador' => 'PersonaController',
+        ]);*/
+
+        //$queyBuilder = $personaRepository->getwithQueryBuilder($q);
+
+        $pagination = $paginator->paginate(
+            $personaRepository->findAll(), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10/*limit per page*/
+        );
+
+        return $this->render('persona_admin/supra.html.twig', [
+            'pagination'         => //$personaRepository->findBy([], ['dni' => 'asc']),
+            $pagination,
+            'nombre_controlador' => 'PersonaController',
+        ]);
+
     }
 
 }

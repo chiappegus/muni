@@ -17,12 +17,15 @@ class IntendenteType extends AbstractType
         $builder
             ->add('estado')
             ->add('fecha_inicio', DateType::class, [
-                'widget' => 'single_text',
+                'widget'     => 'single_text',
+                'empty_data' => '',
+
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
-                'html5'  => false,
+                'html5'      => false,
                 // adds a class that can be selected in JavaScript
-                'attr'   => ['class' => 'js-datepicker'],
-                'format' => 'dd/mm/yyyy',
+                'attr'       => ['class' => 'js-datepicker'],
+                'format'     => 'dd/mm/yyyy',
+
             ])
 
             ->add('fin_Funcion', DateType::class, [
