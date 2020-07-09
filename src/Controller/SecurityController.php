@@ -31,4 +31,6 @@ class SecurityController extends AbstractController
         throw new Exception("fuimos interceptados antes de entrar acaS", 1);
 
     }
+
+    // ver  : https://symfony.com/doc/4.0/doctrine/registration_form.html
 }

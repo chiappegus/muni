@@ -110,6 +110,16 @@ class PersonaController extends AbstractController
      */
     public function edit(Request $request, Persona $persona, UploaderHelper $uploaderHelper): Response
     {
+        // dd($this->getUser()->getId(), $persona->getId());
+        //dd($persona->getId() === $this->getUser()->getId());
+        if (($persona->getId() != $this->getUser()->getId()) && (!$this->isGranted('ROLE_SUPRA'))) {
+            throw $this->createAccessDeniedException('No access!');
+            //dd($persona->getId() === $this->getUser()->getId());
+        }
+        // if ($persona->getId() != $this->getUser()->getId() && !$this->isGranted('ROLE_ADMIN')) {
+        //     throw $this->createAccessDeniedException('No access!');
+        // }
+
         $form = $this->createForm(PersonaType::class, $persona);
         $form->handleRequest($request);
 
