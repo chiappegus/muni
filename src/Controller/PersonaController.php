@@ -6,6 +6,7 @@ use App\Entity\Persona;
 use App\Form\PersonaType;
 use App\Repository\PersonaRepository;
 use App\Service\UploaderHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -119,12 +120,21 @@ class PersonaController extends AbstractController
         =            se va a cambiar por voters            =
         ==================================================*/
 
-        if (($persona->getId() != $this->getUser()->getId()) && (!$this->isGranted('ROLE_SUPRA'))) {
+        // if (($persona->getId() != $this->getUser()->getId()) && (!$this->isGranted('ROLE_SUPRA'))) {
+        //     throw $this->createAccessDeniedException('No access!'); }
+
+        /*=====  End of se va a cambiar por voters  ======*/
+
+        /*==============================
+        =            voters            =
+        ==============================*/
+
+        if (!$this->isGranted('MANAGE', $persona)) {
             throw $this->createAccessDeniedException('No access!');
-
-            /*=====  End of se va a cambiar por voters  ======*/
-
         }
+
+        /*=====  End of voters  ======*/
+
         // if ($persona->getId() != $this->getUser()->getId() && !$this->isGranted('ROLE_ADMIN')) {
         //     throw $this->createAccessDeniedException('No access!');
         // }
@@ -163,9 +173,10 @@ class PersonaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="persona_delete", methods={"DELETE"})
-     */
+/**
+ * @Route("/{id}", name="persona_delete", methods={"DELETE"})
+ * @IsGranted("MANAGE", subject="persona")
+ */
     public function delete(Request $request, Persona $persona): Response
     {
         if ($this->isCsrfTokenValid('delete' . $persona->getId(), $request->request->get('_token'))) {
