@@ -112,9 +112,18 @@ class PersonaController extends AbstractController
     {
         // dd($this->getUser()->getId(), $persona->getId());
         //dd($persona->getId() === $this->getUser()->getId());
+
+        //dd($persona->getId() === $this->getUser()->getId());
+
+        /*==================================================
+        =            se va a cambiar por voters            =
+        ==================================================*/
+
         if (($persona->getId() != $this->getUser()->getId()) && (!$this->isGranted('ROLE_SUPRA'))) {
             throw $this->createAccessDeniedException('No access!');
-            //dd($persona->getId() === $this->getUser()->getId());
+
+            /*=====  End of se va a cambiar por voters  ======*/
+
         }
         // if ($persona->getId() != $this->getUser()->getId() && !$this->isGranted('ROLE_ADMIN')) {
         //     throw $this->createAccessDeniedException('No access!');
