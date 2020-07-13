@@ -28,7 +28,7 @@ class PersonaController extends AbstractController
     {
         return $this->render('persona/index.html.twig', [
             //'personas'           => $personaRepository->findAll(),
-            'personas'           => $personaRepository->papillo(),
+            'personas'           => $personaRepository->findAll(),
             'nombre_controlador' => 'PersonaController',
         ]);
     }
