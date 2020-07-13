@@ -5,12 +5,16 @@ namespace App\Controller;
 use App\Entity\Persona;
 use App\Form\PersonaType;
 use App\Repository\PersonaRepository;
+use App\Security\LoginFormAuthenticator;
 use App\Service\UploaderHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\encodePassword;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 /**
  * @Route("/persona")
@@ -23,7 +27,8 @@ class PersonaController extends AbstractController
     public function index(PersonaRepository $personaRepository): Response
     {
         return $this->render('persona/index.html.twig', [
-            'personas'           => $personaRepository->findAll(),
+            //'personas'           => $personaRepository->findAll(),
+            'personas'           => $personaRepository->papillo(),
             'nombre_controlador' => 'PersonaController',
         ]);
     }
@@ -32,12 +37,26 @@ class PersonaController extends AbstractController
      * @Route("/new", name="persona_new", methods={"GET","POST"})
 
      */
-    function new (Request $request, PersonaRepository $personaRepository, UploaderHelper $uploaderHelper): Response {
+    function new (Request $request, PersonaRepository $personaRepository, UploaderHelper $uploaderHelper, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator): Response{
 //dd($em);
         //
         //
         //
-        //
+        //https://stackoverflow.com/questions/47933339/what-are-exactly-request-attributes
+        //dd($this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
+        // $aca[] = $request->attributes;
+        // $aca[] = $request->attributes->get('user');
+
+        //$request->attributes->set('_route_params', $parameters);
+        // dd($request->attributes->get('_route_params'));
+        // dd($request->attributes->get('_access_control_attributes')[0]);
+        // dd($aca);
+
+        $roless = $request->attributes->get('_access_control_attributes')[0];
+
+        // dd($this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
+
+        //dd('IS_AUTHENTICATED_ANONYMOUSLY' == $aca);
 
         if (!isset($_GET["persona"])) {
 
@@ -81,13 +100,25 @@ class PersonaController extends AbstractController
 
                 $persona->setImageFilename($newFilename);
             }
+            //dd($form['password']->getData());
+            $persona->setPassword($passwordEncoder->encodePassword(
+                $persona,
+                $form['password']->getData()
+            ));
             /*=====  End of images  ======*/
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($persona);
             $entityManager->flush();
 
-            return $this->redirectToRoute('persona_index');
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $persona,
+                $request,
+                $formAuthenticator,
+                'main'
+            );
+
+            //return $this->redirectToRoute('persona_index');
         }
 
         return $this->render('persona/new.html.twig', [
@@ -96,9 +127,9 @@ class PersonaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="persona_show", methods={"GET"})
-     */
+/**
+ * @Route("/{id}", name="persona_show", methods={"GET"})
+ */
     public function show(Persona $persona): Response
     {
         return $this->render('persona/show.html.twig', [
@@ -106,11 +137,20 @@ class PersonaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="persona_edit", methods={"GET","POST"})
-     */
+/**
+ * @Route("/{id}/edit", name="persona_edit", methods={"GET","POST"})
+ */
     public function edit(Request $request, Persona $persona, UploaderHelper $uploaderHelper): Response
     {
+
+        /* $roles = $persona->getRoles();
+        $roles[] = 'ROLE_RODOLFO';
+        array_unique($roles);
+        $persona->setRoles($roles);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($persona);
+        $entityManager->flush();*/
+
         // dd($this->getUser()->getId(), $persona->getId());
         //dd($persona->getId() === $this->getUser()->getId());
 
@@ -179,13 +219,21 @@ class PersonaController extends AbstractController
  */
     public function delete(Request $request, Persona $persona): Response
     {
+
         if ($this->isCsrfTokenValid('delete' . $persona->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($persona);
             $entityManager->flush();
+
         }
 
-        return $this->redirectToRoute('persona_index');
-    }
+        // dd($persona);
+        //http://jonsegador.com/2012/03/error-con-symfony2-you-cannot-refresh-a-user-from-the-entityuserprovider-that-does-not-contain-an-identifier/
+        /*----------  solo lo deberia hacer un user auth y no uno
+        directo ----------*/
+
+        return $this->redirect($this->generateUrl('persona_index'));}
+
+    /*----------  proximo https://hugo-soltys.com/blog/easily-implement-facebook-login-with-symfony-4  ----------*/
 
 }

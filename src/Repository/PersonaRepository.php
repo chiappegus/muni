@@ -139,4 +139,30 @@ class PersonaRepository extends ServiceEntityRepository
 
     }
 
+    /**
+     * @param null|string $value
+     * @return Persona[] Returns an array of Persona objects
+     */
+
+    public function papillo()
+    {
+        /*=================================
+        =            con inner            =
+        =================================*/
+
+        /*el tema aca es que trae toda la info
+        con el inner y si no es intendente o no esta cargado no trae nada
+
+        /*=====  End of con inner  ======*/
+
+        return $this->createQueryBuilder('a')
+
+            ->leftJoin('a.relation_id', 'fc')
+            ->addSelect('fc')
+
+            ->getQuery()
+            ->execute();
+
+    }
+
 }

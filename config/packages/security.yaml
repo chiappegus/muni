@@ -33,6 +33,7 @@ security:
             logout:
               path: app_logout
               target: app_login
+              
 
             remember_me:
               secret: '%kernel.secret%'
@@ -53,11 +54,13 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/persona/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          #- { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
          #- { path: ^/change-password, roles: IS_AUTHENTICATED_FULLY }
          - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/persona/new, roles: ROLE_ADMIN }
+         
          - { path: ^/intendente/new, roles: ROLE_ADMIN }
          - { path: ^/account, roles: IS_AUTHENTICATED_FULLY }
          

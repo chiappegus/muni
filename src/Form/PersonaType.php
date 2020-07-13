@@ -2,11 +2,11 @@
 
 namespace App\Form;
 
-use App\Entity\Intendente;
 use App\Entity\Persona;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
@@ -26,31 +26,31 @@ class PersonaType extends AbstractType
             ->add('nombre')
             ->add('apellido')
             ->add('dni')
-            ->add('intendente', EntityType::class, [
-                'class'           => Intendente::class,
-                //'mapped'          => false,
-                'empty_data'      => null,
-                'required'        => false,
-                //array('maybe', 'no', 'yes'),
-                //'choice_label'    => 'id', //'nombre', ver que
+            // ->add('intendente', EntityType::class, [
+            //     'class'           => Intendente::class,
+            //     //'mapped'          => false,
+            //     'empty_data'      => null,
+            //     'required'        => false,
+            //     //array('maybe', 'no', 'yes'),
+            //     //'choice_label'    => 'id', //'nombre', ver que
 
-                'choice_label'    => function (Intendente $intendente) {
-                    return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());},
+            //     'choice_label'    => function (Intendente $intendente) {
+            //         return sprintf('(%d) %s', $intendente->getId(), $intendente->getRelation());},
 
-                'label'           => 'ID_intendente :)',
-                'placeholder'     => 'Selecciona el estado del intendente o id',
-                'invalid_message' => 'No deberias hacer eso tengo tu ip',
+            //     'label'           => 'ID_intendente :)',
+            //     'placeholder'     => 'Selecciona el estado del intendente o id',
+            //     'invalid_message' => 'No deberias hacer eso tengo tu ip',
 
-            ])
-            ->add('email')
-            // ->add('password', RepeatedType::class, [
-            //     'type'            => PasswordType::class,
-            //     'invalid_message' => 'The password fields must match.',
-            //     'options'         => ['attr' => ['class' => 'password-field']],
-            //     'required'        => true,
-            //     'first_options'   => ['label' => 'Password'],
-            //     'second_options'  => ['label' => 'Repeat Password'],
             // ])
+            ->add('email')
+            ->add('password', RepeatedType::class, [
+                'type'            => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options'         => ['attr' => ['class' => 'password-field']],
+                'required'        => true,
+                'first_options'   => ['label' => 'Password'],
+                'second_options'  => ['label' => 'Repeat Password'],
+            ])
         ;
 
         $imageConstraints = [

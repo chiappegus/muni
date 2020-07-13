@@ -43,18 +43,26 @@
         </div>
 
 
-         <div class="col-sm-9">
+    {#      <div class="col-sm-9">
             {{ form_row(form.intendente, {
                 attr: {
                     'placeholder': 'Es Intendente'
                 }
             }) }}
-        </div>
+        </div> #}
 
         <div class="col-sm-9">
             {{ form_row(form.email, {
                 attr: {
                     'placeholder': 'email'
+                }
+            }) }}
+        </div>
+
+           <div class="col-sm-9">
+            {{ form_row(form.password, {
+                attr: {
+                    'placeholder': 'password'
                 }
             }) }}
         </div>
